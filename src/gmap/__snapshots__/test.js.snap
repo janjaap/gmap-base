@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gmap should match the snapshot 1`] = `
+Array [
+  "API_READY",
+  "MAP_READY",
+  "UNKNOWN_ERROR",
+  "OVER_QUERY_LIMIT",
+  "REQUEST_DENIED",
+  "INVALID_REQUEST",
+  "ZERO_RESULTS",
+  "ERROR",
+]
+`;

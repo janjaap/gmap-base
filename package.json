@@ -1,0 +1,41 @@
+{
+  "name": "gmap-base",
+  "version": "0.0.3",
+  "description": "Google Maps base module",
+  "license": "Unlicensed",
+  "repository": "github.com/endouble/gmap-base",
+  "author": {
+    "name": "Endouble",
+    "url": "https://endouble.com"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "babel": "npx babel ./src --out-dir ./dist --ignore spec.js,test.js",
+    "docs": "npx documentation build ./src/** -f html -o ./docs && npx documentation readme ./src/** --section=API",
+    "lint": "npx eslint src",
+    "test": "jest",
+    "postinstall": "npx babel ./src --out-dir ./dist --ignore spec.js,test.js"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0"
+  },
+  "devDependencies": {
+    "@endouble.com/eslint-config-endouble": "^1.1.0",
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "^22.4.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "documentation": "^6.1.0",
+    "eslint": "^4.18.2",
+    "isomorphic-fetch": "^2.2.1",
+    "jest": "^22.4.2",
+    "npx": "^10.0.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/.jest/polyfills.js",
+      "jest-googleapi-mock"
+    ]
+  }
+}

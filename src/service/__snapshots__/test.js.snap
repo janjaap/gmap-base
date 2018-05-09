@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Service should match the snapshot 1`] = `
+Array [
+  "REQUEST_PENDING",
+  "OK",
+  "UNKNOWN_ERROR",
+  "NOT_FOUND",
+  "REQUEST_DENIED",
+  "INVALID_REQUEST",
+  "ZERO_RESULTS",
+]
+`;

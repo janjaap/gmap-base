@@ -1,0 +1,13 @@
+{
+    "extends": "@endouble.com/eslint-config-endouble",
+    "globals": {
+        "fetch": false,
+        "FormData": true
+    },
+    "overrides": [{
+        "files": ["**/*test.js"],
+        "env": {
+            "jest": true
+        }
+    }]
+}
