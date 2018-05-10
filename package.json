@@ -2,11 +2,10 @@
   "name": "gmap-base",
   "version": "0.0.3",
   "description": "Google Maps base module",
-  "license": "Unlicensed",
-  "repository": "github.com/endouble/gmap-base",
+  "license": "MIT",
+  "repository": "github.com/janjaap/gmap-base",
   "author": {
-    "name": "Endouble",
-    "url": "https://endouble.com"
+    "name": "JJM van Deursen"
   },
   "main": "./dist/index.js",
   "scripts": {
@@ -32,10 +31,8 @@
     "jest": "^22.4.2",
     "npx": "^10.0.1"
   },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/.jest/polyfills.js",
-      "jest-googleapi-mock"
-    ]
-  }
+  "setupFiles": [
+    "<rootDir>/.jest/polyfills.js",
+    "jest-googleapi-mock"
+  ]
 }
