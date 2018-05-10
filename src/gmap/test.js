@@ -3,7 +3,7 @@ import Gmap from './';
 import Service from '../service';
 
 const rootElement = document.createElement('div');
-const apiKey = 'AIzaSyDt3RFKC2m968_2F9UXowsANt_ydcr0Vd0';
+const apiKey = 'here-be-a-google-maps-api-key';
 const center = 'Asterweg 20 F-1, Amsterdam';
 const gmap = new Gmap({ rootElement, apiKey, center });
 
