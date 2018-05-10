@@ -34,6 +34,8 @@ const map = new Gmap({
 });
 ```
 
+![Map with marker](examples/img/plain.png)
+
 ### Interacting with a rendered map (assuming class context)
 ```javascript
 // define callbacks. Not required if no interacting is needed
@@ -170,6 +172,8 @@ infoWindowContent({ travelMode, distance, duration }) {
 ```
 
 The function takes an options object as its parameter with the keys `travelMode`, `distance` and `duration`.
+
+![Map with marker](examples/img/directions.png)
 
 #### Methods
 
