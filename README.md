@@ -1,5 +1,15 @@
 # Google Maps Base module
 
+<center>
+
+[![GitHub issues](https://img.shields.io/github/issues/janjaap/gmap-base.svg)](https://github.com/janjaap/gmap-base/issues)
+[![GitHub license](https://img.shields.io/github/license/janjaap/gmap-base.svg)](https://github.com/janjaap/gmap-base/blob/master/LICENSE)
+[![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://github.com/janjaap/gmap-base)
+[![node](https://img.shields.io/node/v/passport.svg)](https://github.com/janjaap/gmap-base)
+
+
+</center>
+
 ## Introduction
 This package comes with a number of classes:
 * `Gmap` - base class that can be used to render a map and place markers on it
@@ -24,7 +34,7 @@ const center = 'Dam Square, Amsterdam';
 const apiKey = 'here-be-a-google-api-key';
 
 // instantiate the map class. By default, the map is rendered in the root element, unless 'renderMapOnApiReady' is passed to the constructor with value 'false'.
-const map = new Gmap({
+const gmap = new Gmap({
     rootElement,
     center,
     apiKey,
@@ -36,32 +46,34 @@ const map = new Gmap({
 
 ![Map with marker](examples/img/plain.png)
 
-### Interacting with a rendered map (assuming class context)
+### Interacting with a rendered map
 ```javascript
+let gmap;
+
 // define callbacks. Not required if no interacting is needed
-onMapReady = () => {
+const onMapReady = () => {
     // the map is instantiated and has been rendered in the root element; markers can be placed or other interactions can take place
-    this.map.addMarker('Baarn, Paleis Soestdijk, Baarn', (marker) => {
+    gmap.addMarker('Baarn, Paleis Soestdijk, Baarn', (marker) => {
         // adding markers is asynchronous, use a callback function to ensure that the marker has been added to the map before interacting with it
     });
 
-    this.map.addMarker('Keukenhof, Stationsweg, Lisse');
+    gmap.addMarker('Keukenhof, Stationsweg, Lisse');
     // etc. etc.
 
-    // after setting markers, the bounds are not automatically updated. Calling 'fitBoundsToVisibleMarkers' will take core of that
-    this.map.fitBoundsToVisibleMarkers();
+    // after setting markers, the bounds are not automatically updated. Calling 'fitBoundsToVisibleMarkers' will take care of that
+    gmap.fitBoundsToVisibleMarkers();
 
     // removing a marker
-    this.map.removeMarker('Baarn, Paleis Soestdijk, Baarn');
+    gmap.removeMarker('Baarn, Paleis Soestdijk, Baarn');
 };
 
 // instantiate the map class
-this.map = new Gmap({
+gmap = new Gmap({
     rootElement,
     center,
     apiKey,
     callbacks: {
-        MAP_READY: this.onMapReady,
+        MAP_READY: onMapReady,
     },
 });
 ```
@@ -105,38 +117,35 @@ This service can render routes and provide alternatives for those routes and plo
 ```javascript
 import { Gmap, DirectionsService } from 'gmap-base';
 
+let gmap;
+
 // define callback functions
-onApiReady = () => {
+const onApiReady = () => {
     // the Google Maps Directions API is not ready before this callback function is called
 
     // create a new class instance
     const directionsService = new DirectionsService({
         callbacks: {
-            NOT_FOUND: onOriginNotFound,
-            OK: onOriginFound,
+            NOT_FOUND: (response) => {
+                // handle an unfound location
+            },
+            OK: (response) => {
+                // origin address has been found
+            },
         },
     });
 
-    // and add it to the Core instance
-    this.map.addService(directionsService);
-};
-
-onOriginNotFound = (response) => {
-    // handle an unfound location
-};
-
-onOriginFound = (response) => {
-    // origin address has been found
+    // and add it to the map instance
+    gmap.addService(directionsService);
 };
 
 // instantiate the map class
-this.map = new Gmap({
+gmap = new Gmap({
     rootElement,
     center,
     apiKey,
     callbacks: {
-        API_READY: this.onApiReady,
-        MAP_READY: this.onMapReady,
+        API_READY: onApiReady,
     },
 });
 ```
@@ -145,8 +154,8 @@ this.map = new Gmap({
 Assuming that the page in which the map is rendered, has a form with fields that allow for entering an address as well as selecting a travel mode, your implementation should have a function that handles that type of input:
 
 ```javascript
-onChangeDirections(destination, origin, travelMode) {
-    const directionsService = this.map.getService('Directions');
+const onChangeDirections = (destination, origin, travelMode) => {
+    const directionsService = gmap.getService('Directions');
 
     directionsService
         .setInfoWindowContentFunc(this.infoWindowContent)
@@ -162,13 +171,11 @@ onChangeDirections(destination, origin, travelMode) {
 Calling `showRoutes` will render the results of the directions request on the map. If `provideRouteAlternatives` was passed in, the result will render all suggestions on the map. Each route is clickable and will show a infoWindow when clicked. In order to customise the infowindow contents, a function can be assigned through `setInfoWindowContentFunc`:
 
 ```javascript
-infoWindowContent({ travelMode, distance, duration }) {
-    return `
-        ${travelMode}<br />
-        Distance: ${distance}<br />
-        Duration: ${duration}
-    `;
-}
+const infoWindowContent = ({ travelMode, distance, duration }) => `
+    ${travelMode}<br />
+    Distance: ${distance}<br />
+    Duration: ${duration}
+`;
 ```
 
 The function takes an options object as its parameter with the keys `travelMode`, `distance` and `duration`.
